@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = "Checkout";
+}
+
+<br />
+<h2>Checkout</h2>
+
+<p>
+    @ViewBag.Kunde.Vorname @ViewBag.Kunde.Nachname <br />
+    @ViewBag.Kunde.Strasse @ViewBag.Kunde.Hausnr <br />
+    @ViewBag.Kunde.PLZ @ViewBag.Kunde.Ort <br />
+    @ViewBag.Kunde.Email <br />
+    @ViewBag.Kunde.TelefonNr
+</p>
+
+<p>Sie haben die folgenden Ware erfolgreich bestellt:</p>
+<table id="table" class="table table-success table-striped">
+    <tbody>
+        <tr>
+            <th scope="col">Artikel Name</th>
+            <th scope="col">Menge</th>
+            <th scope="col">Preis</th>
+            <th scope="col">Total</th>
+        </tr>
+        @foreach (var item in ViewBag.list)
+        {
+            if (item != null)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td id="menge + @item.Id">1</td>
+                    <td id="preis_@item.Id">@item.Preis</td>
+                    <td id="total_@item.Id">@item.Preis</td>
+                </tr>
+            }
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td><b>Total</b></td>
+            <td>@ViewBag.Total</td>
+        </tr>
+    </tbody>
+</table>
+<p>Bezahlung ist nur gegen Vorauskasse möglich. Wir bemühen uns, Ihnen in der nahen Zukunft auch andere Zahlungsmethoden zur Verfügung stellen zu können.<br />
+    Firma: Kirchheim Kaffee<br />
+    Bank: DE30 3456 1234 0000 0000 1234 56<br />
+    Verwendungszweck: Kunden-nr @ViewBag.KundenId, Bestellungsnummer @ViewBag.BestellungId<br />
+    <br />
+    Nach dem Zahlungseingang schicken wir Ihnen die Ware zu.
+    </p>

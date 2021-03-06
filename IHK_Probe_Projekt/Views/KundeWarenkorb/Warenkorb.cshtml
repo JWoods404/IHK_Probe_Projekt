@@ -1,0 +1,108 @@
+﻿
+@{
+    ViewBag.Title = "Warenkorb";
+}
+
+<br />
+<h2>Warenkorb</h2>
+<table id="table" class="table table-success table-striped">
+    <tbody>
+        <tr>
+            <th scope="col">Artikel Name</th>
+            <th scope="col">Menge</th>
+            <th scope="col">Preis</th>
+            <th scope="col">Total</th>
+            <th scope="col">Menge Bearbeiten</th>
+        </tr>
+        @foreach (var item in Model.Warenkorb.Artikeln)
+        {
+            if (item != null)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td id="menge + @item.Id">1</td>
+                    <td id="preis_@item.Id">@item.Preis</td>
+                    <td id="total_@item.Id">@item.Preis</td>
+                    <td>
+                        <button id="@item.Id" class="btn btn-success m-1" onclick="add(this.id)">+</button>
+                        <button id="@item.Id" class="btn btn-success m-1" onclick="subtract(this.id)">-</button>
+                    </td>
+                </tr>
+            }
+        }
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td id="total"></td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>
+<form action="~/KundeWarenkorb/Warenkorb" method="post">
+    <input type="text" name="item_1" hidden />
+    <input type="text" name="item_2" hidden />
+    <input type="text" name="item_3" hidden />
+    <input type="text" name="item_4" hidden />
+    <input type="submit" class="btn btn-primary" value="Checkout" />
+</form>
+<script type="text/javascript">
+    function add(clicked_id) {
+        var menge = document.getElementById("menge + " + clicked_id)
+        menge.innerHTML = parseInt(menge.innerHTML) + 1
+
+        var preis = document.getElementById("preis_" + clicked_id)
+        var subtotal = document.getElementById("total_" + clicked_id)
+        subtotal.innerHTML = (parseFloat(preis.innerHTML) * parseInt(menge.innerHTML)).toFixed(2)
+
+        computeTableColumnTotal("table", 3)
+
+        document.getElementById("item_" + clicked_id).setAttribute('value', menge.innerHTML);
+    }
+
+    function subtract(clicked_id) {
+        var menge = document.getElementById("menge + " + clicked_id)
+
+        if (parseInt(menge.innerHTML) > 0) {
+            menge.innerHTML = parseInt(menge.innerHTML) - 1
+
+            var preis = document.getElementById("preis_" + clicked_id)
+            var subtotal = document.getElementById("total_" + clicked_id)
+            subtotal.innerHTML = (parseFloat(preis.innerHTML) * parseInt(menge.innerHTML)).toFixed(2)
+        }
+        computeTableColumnTotal("table", 3)
+    }
+
+    function computeTableColumnTotal(tableId, colNumber) {
+        // find the table with id attribute tableId
+        // return the total of the numerical elements in column colNumber
+        // skip the top row (headers) and bottom row (where the total will go)
+        var result = 0;
+        try {
+            var tableElem = window.document.getElementById(tableId);
+            var tableBody = tableElem.getElementsByTagName("tbody").item(0);
+            var i;
+            var howManyRows = tableBody.rows.length;
+            for (i = 1; i < (howManyRows - 1); i++) // skip first and last row (hence i=1, and howManyRows-1)
+            {
+                var thisTrElem = tableBody.rows[i];
+                var thisTdElem = thisTrElem.cells[colNumber];
+                var thisTextNode = thisTdElem.childNodes.item(0);
+
+                // try to convert text to numeric
+                var thisNumber = parseFloat(thisTextNode.data);
+                // if you didn't get back the value NaN (i.e. not a number), add into result
+                if (!isNaN(thisNumber))
+                    result += thisNumber;
+            } // end for
+        } // end try
+        catch (ex) {
+            window.alert("Exception in function computeTableColumnTotal()\n" + ex);
+            result = 0;
+        }
+        finally {
+            var total = document.getElementById("total")
+            total.innerHTML = result.toFixed(2)
+        }
+    }
+</script>

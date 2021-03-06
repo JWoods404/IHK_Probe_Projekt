@@ -1,0 +1,65 @@
+﻿@{
+    ViewBag.Title = "Shop";
+}
+<br />
+<h2>Shop</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <img class="rounded" src="~/Content/Media/coffee beans.jpeg" height="100%" width="100%" />
+    </div>
+    @for (int i = 0; i < 2; i++)
+    {
+        <div class="col-md-3 text-center align-items-center align-content-between align-content-between">
+            <p>------------------</p>
+            <h2>@ViewBag.list[i].Name</h2>
+            <p>------------------</p>
+            <h3>@ViewBag.list[i].Categorie</h3>
+            <form action="~/Home/Shop" method="post">
+                <input type="text" name="name" value="@ViewBag.list[i].Name" hidden="hidden" />
+                <div class="circletest rounded-circle text-center align-items-center align-content-between align-content-between">
+                    <br />
+                    <h4>€@ViewBag.list[i].Preis</h4>
+                    <p>(350 g.)</p>
+                </div>
+                <br />
+                <input type="submit" class="btn btn-info m-1" value="Anzeigen">
+            </form>
+            <form action="~/KundeWarenkorb/AddItem" method="post">
+                <input type="text" name="name" value="@ViewBag.list[i].Name" hidden="hidden" />
+                <input type="submit" class="btn btn-info m-1" value="In den Warenkorb">
+            </form>
+        </div>
+    }
+</div>
+@if (ViewBag.count > 2)
+{
+    <div class="row">
+        @for (int i = 2; i < 4; i++)
+        {
+            <div class="col-md-3 text-center align-items-center align-content-between align-content-between">
+                <p>------------------</p>
+                <h2>@ViewBag.list[i].Name</h2>
+                <p>------------------</p>
+                <h3>@ViewBag.list[i].Categorie</h3>
+                <form action="~/Home/Shop" method="post">
+                    <input type="text" name="name" value="@ViewBag.list[i].Name" hidden="hidden" />
+                    <div class="circletest rounded-circle text-center align-items-center align-content-between align-content-between">
+                        <br />
+                        <h4>€@ViewBag.list[i].Preis</h4>
+                        <p>(350 g.)</p>
+                    </div>
+                    <br />
+                    <input type="submit" class="btn btn-info " value="Anzeigen">
+                </form>
+                <form action="~/KundeWarenkorb/AddItem" method="post">
+                    <input type="text" name="name" value="@ViewBag.list[i].Name" hidden="hidden" />
+                    <input type="submit" class="btn btn-info m-1" value="In den Warenkorb">
+                </form>
+            </div>
+        }
+        <div class="col-md-6">
+            <img class="rounded" src="~/Content/Media/coffee-table-beans.jpeg" height="100%" width="100%" />
+        </div>
+    </div>
+}

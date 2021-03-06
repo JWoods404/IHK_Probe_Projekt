@@ -1,0 +1,56 @@
+﻿@model IHK_Probe_Projekt.Models.Artikel
+
+@{
+    ViewBag.Title = "Artikel Beschreibung";
+}
+
+<br />
+
+<div>
+    <h4>Artikel</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Categorie)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Categorie)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Geschmacksnoten)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Geschmacksnoten)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Beschreibung)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Beschreibung)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Preis)
+        </dt>
+
+        <dd>
+            €@Html.DisplayFor(model => model.Preis)
+        </dd>
+
+    </dl>
+</div>
+<form class="m-1" action="~/Home/Shop" method="get"><button type="submit" class="btn btn-primary">Zurück</button></form>
+<form class="m-1" action="~/KundeWarenkorb/AddItem" method="post"><input type="text" name="name" value="@Model.Name" hidden="hidden" /><button type="submit" class="btn btn-primary">Im Warenkorb</button></form>

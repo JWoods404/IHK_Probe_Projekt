@@ -1,0 +1,22 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<br />
+<h2>Login</h2>
+@if (ViewBag.Error != "")
+{<label class="alert-danger">@ViewBag.Error</label>}
+<form action="~/KundeWarenkorb/Login" method="post">
+    <div class="form-group">
+        <input type="text" name="Email" placeholder="Email" />
+    </div>
+    <div class="form-group">
+        <input type="password" name="Password" placeholder="Password" />
+    </div>
+    <input type="submit" class="btn btn-primary" value="Login" />
+</form>
+<form action="~/KundeWarenkorb/NeuerKunde" method="get">
+    <label>Noch nicht registriert?</label>
+    <input type="submit" class="btn btn-primary" value="Registrieren" />
+</form>
